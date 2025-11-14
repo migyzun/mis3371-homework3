@@ -1,9 +1,9 @@
 <!--
-Program name: index.html
+Program name: homework3.html
 Name: Jose Miguel Zuniga
 Date Created: 09/23/2025
-Date Last Edited: 10/24/2025
-Version: 2.0
+Date Last Edited: 11/14/2025
+Version: 2.3
 Description: This is a form that will collect the users information and use it to create a profile with on-the-fly validation
 -->
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ Description: This is a form that will collect the users information and use it t
    
     <main>
         <table>              
-            <form id="patientForm" action="homework3-thankyou.html">
+            <form id="patientForm" action="homework3-thankyou.html" method="get">
                 <div class="format">
                     <tr class="form">
                         <th class="form" colspan="3">Patient Form</th>
@@ -49,7 +49,7 @@ Description: This is a form that will collect the users information and use it t
                         <td><input
                             type="password" id="password" name="password" size="15"
                             placeholder="Enter Password"
-                            title="Password must be 8-30 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#%^&*()-_+=\/><.,`~)."
+                            title="Password must be 8-30 characters long, include at least one uppercase letter, one lowercase letter, and one digit."
                             oninput="validatePassword()"
                             onblur="validatePassword()"
                             required>
@@ -123,18 +123,26 @@ Description: This is a form that will collect the users information and use it t
                     </tr>
                     <!-- Date of Birth -->
                     <tr>
-                        <td class="table"><label for="dateOfBirth">Date of Birth:</label></td>
-                        <td><input
-                            type="date"
-                            id="dateOfBirth"
-                            name="dateOfBirth"
-                            pattern="\d{2}/\d{2}/\d{4}"
-                            placeholder="MM/DD/YYYY"
-                            title="Please enter a valid Date of Birth"
-                            oninput="dobValidation()"
-                            onblur="dobValidation()"
-                            required>
-                            <span class="error-message" id="dob-error"></span>
+                        <td class="table"><label for="dobMonth">Date of Birth:</label></td>
+                        <td>
+                            <input type="text" id="dobMonth" name="dobMonth" placeholder="MM" maxlength="2" size="2"
+                                   title="Month (01-12)" 
+                                   oninput="dobValidation()" 
+                                   onblur="dobValidation()" 
+                                   required>
+                            <span>/</span>
+                            <input type="text" id="dobDay" name="dobDay" placeholder="DD" maxlength="2" size="2"
+                                   title="Day (01-31)" 
+                                   oninput="dobValidation()" 
+                                   onblur="dobValidation()" 
+                                   required>
+                            <span>/</span>
+                            <input type="text" id="dobYear" name="dobYear" placeholder="YYYY" maxlength="4" size="4"
+                                   title="Year (not future, not more than 120 years ago)" 
+                                   oninput="dobValidation()" 
+                                   onblur="dobValidation()" 
+                                   required>
+                            <span class="error-message" id="dobError"></span>
                         </td>
                     </tr>
                     <!-- Social Security -->
@@ -174,7 +182,7 @@ Description: This is a form that will collect the users information and use it t
                             <span class="error-message" id="addressError"></span>
                         </td>
                     </tr>
-                    <!-- Address 2 (optional) -->
+                    <!-- Address 2 -->
                     <tr>
                         <td class="table"><label for="address2">Address 2:</label></td>
                         <td>
@@ -281,7 +289,7 @@ Description: This is a form that will collect the users information and use it t
                             pattern="[0-9]{5}"
                             size="6"
                             minlength="5"
-                            maxlength="10"
+                            maxlength="5"
                             title="Please enter Zip-Code (5 digits)"
                             oninput="validateZipCode()"
                             onblur="validateZipCode()"
@@ -322,7 +330,7 @@ Description: This is a form that will collect the users information and use it t
                             name="phoneNumber" 
                             placeholder="XXX-XXX-XXXX"
                             title="Please enter a valid phone number (XXX-XXX-XXXX)"
-                            maxlength="12" 
+                            maxlength="14" 
                             oninput="formatPhoneNumber()"
                             onblur="validatePhoneNumber()"
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
@@ -340,11 +348,11 @@ Description: This is a form that will collect the users information and use it t
                     <tr>
                         <td class="table"><label id="gender">Gender:</label></td>
                         <td>
-                            <input type="radio" name="msex" value="Male" onchange="validateGender()">
+                            <input type="radio" name="msex" value="Male" onchange="checkFormValidity()">
                             <span>Male</span>
-                            <input type="radio" name="msex" value="Female" onchange="validateGender()">
+                            <input type="radio" name="msex" value="Female" onchange="checkFormValidity()">
                             <span>Female</span>
-                            <input type="radio" name="msex" value="Other" onchange="validateGender()">
+                            <input type="radio" name="msex" value="Other" onchange="checkFormValidity()">
                             <span>Other</span>
                             <span class="error-message" id="genderError"></span>
                         </td>
@@ -353,24 +361,26 @@ Description: This is a form that will collect the users information and use it t
                     <tr>
                         <td class="table"><label id="marital">What is your marital status?</label></td>
                         <td>
-                            <input type="radio" name="marital_status" value="Single">
+                            <input type="radio" name="marital_status" value="Single" onchange="checkFormValidity()">
                             <span>Single</span>
-                            <input type="radio" name="marital_status" value="Married">
+                            <input type="radio" name="marital_status" value="Married" onchange="checkFormValidity()">
                             <span>Married</span>
-                            <input type="radio" name="marital_status" value="Divorced">
+                            <input type="radio" name="marital_status" value="Divorced" onchange="checkFormValidity()">
                             <span>Divorced</span>
+                            <span class="error-message" id="maritalError"></span>
                         </td>
                     </tr>
                     <!-- Insurance -->
                     <tr>
                         <td class="table"><label id="insurance">Do you have insurance?</label></td>
                         <td>
-                            <input type="radio" name="insurance" value="Yes">
+                            <input type="radio" name="insurance" value="Yes" onchange="checkFormValidity()">
                             <span>Yes</span>
-                            <input type="radio" name="insurance" value="No">
+                            <input type="radio" name="insurance" value="No" onchange="checkFormValidity()">
                             <span>No</span>
-                            <input type="radio" name="insurance" value="Unsure">
+                            <input type="radio" name="insurance" value="Unsure" onchange="checkFormValidity()">
                             <span>Unsure</span>
+                            <span class="error-message" id="insuranceError"></span>
                         </td>
                     </tr>
                     <!-- Enter Reason for Visitation -->
@@ -426,6 +436,7 @@ Description: This is a form that will collect the users information and use it t
                     <tr>
                         <td class="buttons" colspan="2">
                             <input type="reset" value="Clear" onclick="clearAllErrors()">
+                            <input type="button" class="submit-button" value="Review" onclick="displayInput()">
                             <input type="button" value="Validate" id="validateButton" onclick="validateForm()">
                             <input type="submit" value="Submit" id="submitButton" style="display:none;">
                         </td>
@@ -434,6 +445,7 @@ Description: This is a form that will collect the users information and use it t
             </form>  
         </table>
        
+        <div id="reviewArea"></div>
         <div id="validationSummary"></div>
     </main>
     <hr>
