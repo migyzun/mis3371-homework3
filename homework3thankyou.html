@@ -1,1 +1,83 @@
+/*
+Program name: homework3thankyou.js
+Name: Jose Miguel Zuniga
+Date Created: 11/14/125
+Date Last Edited: 11/14/125
+Version: 1,0
+Description: Homework 3 thank you page
+*/
+ <!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Thank you! </title>
+    <link href="homework3.css" rel="stylesheet">
+</head>
+
+    <!-- Banner with company logo, name,  and date -->
+<body>
+  
+                    <tr>
+                        <td>
+                        <img
+                            id="logo"
+                            src="../../logo.jpg"
+                            alt="company logo"
+                        />
+                        
+                        </td>
+                        <td valign="bottom" align="right">
+                         <h1>Divine Health Clinic</h1>
+                        <!-- Today's Date -->
+                    <center>
+                     <p>Today is: 
+                    <p id="date"></p>
+                         <!-- JavaScript for displaying dynamic date -->
+                             <script>
+                                const dateElement = document.getElementById('date');
+                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                                const today = new Date().toLocaleDateString('en-US', options);
+                                dateElement.textContent = today;
+                            </script>
+                        </td>
+                    </tr>
+                    <hr>
+                        <!-- Form -->
+                        <main>
+                            <div class="form-container" align="center">
+                                <table class="output">
+                                     <tr>
+                                        <td colspan="2" align="center">
+                                            <h2>Thank you for your submission.</h2>
+                                            <p>We will be contacting you shortly.</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center">
+                                            <!-- Return to Home Page form -->
+                                            <form action="index.html">
+                                                <input type="submit" value="Return to Home Page" />
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </main>
+                    <hr>
+                        <!-- Footer -->
+                        <footer>
+                            <div>
+                                <img id="footer-logo" src="../../logo.jpg" alt="Footer Logo" />
+                                </a>
+                                <p><a href="mailto:migyzuniga@gmail.com">migyzuniga@gmail.com</a></p>
+                                <p><a href="mailto:migyzuniga@gmail.com" class="contact">Contact Us!</a></p>
+                                <p>9999 Elgin Rd, Houston, TX 77004</p>
+                            </div>
+                        </footer>
+
+                        <script src="homework3.js"></script>
+
+    </body>
+</html>
