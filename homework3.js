@@ -2,8 +2,8 @@
 Program name: homework3.js
 Name: Jose Miguel Zuniga
 Date Created: 10/20/25
-Date Last Edited: 10/24/2025
-Version: 2.1
+Date Last Edited: 11/14/2025
+Version: 2.2
 Description: Homework 3 JS
 */
 
@@ -419,6 +419,7 @@ function validateGender() {
         genderError.textContent = "ERROR: Please select a gender.";
         return false;
     }
+    checkFormValidity();
     return true;
 }
 
@@ -432,6 +433,7 @@ function validateMaritalStatus() {
         maritalError.textContent = "ERROR: Please select your marital status.";
         return false;
     }
+    checkFormValidity();
     return true;
 }
 
@@ -445,6 +447,7 @@ function validateInsurance() {
         insuranceError.textContent = "ERROR: Please select if you have insurance.";
         return false;
     }
+    checkFormValidity();
     return true;
 }
 
@@ -467,26 +470,52 @@ function validateDescription() {
 function checkFormValidity() {
     let isValid = true;
 
-    // Check all required fields
-    if (!validateUserID()) isValid = false;
-    if (!validatePassword()) isValid = false;
-    if (!validatePasswordMatch()) isValid = false;
-    if (!validateFirstName()) isValid = false;
-    if (!validateMiddleInitial()) isValid = false;
-    if (!validateLastName()) isValid = false;
-    if (!dobValidation()) isValid = false;
-    if (!validateSSN()) isValid = false;
-    if (!validateAddress()) isValid = false;
-    if (!validateAddress2()) isValid = false;
-    if (!validateCity()) isValid = false;
-    if (!validateState()) isValid = false;
-    if (!validateZipCode()) isValid = false;
-    if (!validateEmail()) isValid = false;
-    if (!validatePhoneNumber()) isValid = false;
-    if (!validateGender()) isValid = false;
-    if (!validateMaritalStatus()) isValid = false;
-    if (!validateInsurance()) isValid = false;
-    if (!validateDescription()) isValid = false;
+    // Check all required fields - only validate if they have content
+    var userID = document.getElementById("userID").value;
+    var password = document.getElementById("password").value;
+    var rePassword = document.getElementById("re_password").value;
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+    var dobMonth = document.getElementById("dobMonth").value;
+    var dobDay = document.getElementById("dobDay").value;
+    var dobYear = document.getElementById("dobYear").value;
+    var ssn = document.getElementById("ssn").value.replace(/\D/g, "");
+    var address1 = document.getElementById("address1").value.trim();
+    var city = document.getElementById("city").value.trim();
+    var state = document.getElementById("state").value;
+    var zipCode = document.getElementById("zipCode").value.trim();
+    var email = document.getElementById("email").value;
+    var phoneNumber = document.getElementById("phoneNumber").value.replace(/\D/g, "");
+    var gender = document.querySelector('input[name="msex"]:checked');
+    var marital = document.querySelector('input[name="marital_status"]:checked');
+    var insurance = document.querySelector('input[name="insurance"]:checked');
+
+    // Check if all required fields are filled
+    if (!userID || userID.length < 5 || userID.length > 20) isValid = false;
+    if (!password || password.length < 8 || password.length > 30) isValid = false;
+    if (!rePassword || password !== rePassword) isValid = false;
+    if (!firstName || firstName.length < 1) isValid = false;
+    if (!lastName || lastName.length < 1) isValid = false;
+    if (!dobMonth || !dobDay || !dobYear) isValid = false;
+    if (ssn.length !== 9) isValid = false;
+    if (!address1 || address1.length < 2) isValid = false;
+    if (!city || city.length < 2) isValid = false;
+    if (!state) isValid = false;
+    if (zipCode.length !== 5) isValid = false;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) isValid = false;
+    if (phoneNumber.length !== 10) isValid = false;
+    if (!gender) isValid = false;
+    if (!marital) isValid = false;
+    if (!insurance) isValid = false;
+
+    // Also check that there are no error messages displayed
+    var errorElements = document.querySelectorAll('.error-message');
+    for (var i = 0; i < errorElements.length; i++) {
+        if (errorElements[i].textContent.trim() !== "") {
+            isValid = false;
+            break;
+        }
+    }
 
     // Show or hide submit button
     var submitButton = document.getElementById("submitButton");
